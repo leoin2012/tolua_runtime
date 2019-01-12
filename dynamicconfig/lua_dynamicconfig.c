@@ -1,18 +1,7 @@
-/**********************************************************\
-|                                                          |
-| xxtea.c                                                  |
-|                                                          |
-| XXTEA encryption algorithm library for Lua.              |
-|                                                          |
-| Encryption Algorithm Authors:                            |
-|      David J. Wheeler                                    |
-|      Roger M. Needham                                    |
-|                                                          |
-| Code Authors: Chen fei <cf850118@163.com>                |
-|               Ma Bingyao <mabingyao@gmail.com>           |
-| LastModified: Feb 7, 2016                                |
-|                                                          |
-\**********************************************************/
+/**
+ * c function for lua to load encrypt file
+ * copyright (c) 2019 shuchangliu
+ */
 
 #include <string.h>
 #include <errno.h>
@@ -145,15 +134,15 @@ static int _b64_decrypt(lua_State *L) {
 }
 
 static int _dofile(lua_State *L) {
-  // const char *filename = luaL_optstring(L, 1, NULL);
-  // int n = lua_gettop(L);
-  // if (luaL_loadfile(L, filename) != 0) lua_error(L);
-  // lua_call(L, 0, LUA_MULTRET);
-  // return lua_gettop(L) - n;
-
 	const char *filename = luaL_optstring(L, 1, NULL);
-	const int encrypt = luaL_optint(L, 2, 0);
+	int n = lua_gettop(L);
+	if (luaL_loadfile(L, filename) != 0) lua_error(L);
+	lua_call(L, 0, LUA_MULTRET);
+	return lua_gettop(L) - n;
+}
 
+static int _dofile_b64(lua_State *L) {
+	const char *filename = luaL_optstring(L, 1, NULL);
 	int n = lua_gettop(L);
 
 	FILE *f;
@@ -167,7 +156,7 @@ static int _dofile(lua_State *L) {
 	{
 		fseek(f, 0, SEEK_END);
 		long fsize = ftell(f);
-		rewind(f);
+		fseek(f, 0, SEEK_SET);
 
 		char *buffer = (char*)malloc(sizeof(char)*fsize + 1);
 		if (!buffer)
@@ -184,24 +173,18 @@ static int _dofile(lua_State *L) {
 			fread(buffer, sizeof(char), fsize, f);
 
 			/* Make sure the buffer is NUL-terminated, just in case */
-			// size_t fsz;
-			// fsz = (size_t)fsize;
-			// buffer[fsz] = '\0';
 			buffer[fsize] = '\0';
 
-			if(encrypt == 1)
-			{
-				char *result = (char *)b64_decode((const unsigned char *)buffer, strlen((char *)buffer));
-				free(buffer);
-				buffer = result;
-			}
+			char *result = (char *)b64_decode((const unsigned char *)buffer, strlen((char *)buffer));
+			free(buffer);
+			buffer = result;
 
 			if (luaL_loadbuffer(L, buffer, strlen(buffer), filename) == 0)
 			{
-				 if(lua_pcall(L, 0, LUA_MULTRET, 0) != 0)
-				 {
-				 	luaL_error(L, "lua_pcall error");
-				 }
+				if(lua_pcall(L, 0, LUA_MULTRET, 0) != 0)
+				{
+					luaL_error(L, "lua_pcall error");
+				}
 			}
 
 			free(buffer);
@@ -209,7 +192,6 @@ static int _dofile(lua_State *L) {
 
 		fclose(f);
 	}
-	
 
 	return lua_gettop(L) - n;
 }
@@ -223,15 +205,19 @@ static const luaL_Reg dynamicconfig[] = {
 	{"b64_encrypt",		_b64_encrypt},
 	{"b64_decrypt",		_b64_decrypt},
 	{"dofile",			_dofile},
+	{"dofile_b64",	    _dofile_b64},
 	{0, 0}
 };
 
 LUALIB_API int luaopen_dynamicconfig(lua_State * L) {
 #if LUA_VERSION_NUM >= 502 // LUA 5.2 or above
-    lua_newtable(L);
-    luaL_setfuncs(L, dynamicconfig, 0);
+	lua_newtable(L);
+	luaL_setfuncs(L, dynamicconfig, 0);
 #else
 	luaL_register(L, "dynamicconfig", dynamicconfig);
 #endif
+	
+	// initial base64 default alphabet
+	b64_setup("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 	return 1;
 }
