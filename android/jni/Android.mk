@@ -36,6 +36,7 @@ LOCAL_SRC_FILES :=	../../tolua.c \
  					../../luasocket/udp.c \
  					../../luasocket/usocket.c \
  					../../dynamicconfig/xxtea.c \
+ 					../../dynamicconfig/b64.c \
  					../../dynamicconfig/lua_dynamicconfig.c \
  					
 LOCAL_WHOLE_STATIC_LIBRARIES += libluajit
