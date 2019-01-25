@@ -165,15 +165,8 @@ static int _dofile_b64(lua_State *L) {
 		}
 		else
 		{
-			// set the memory to zero before you copy in.
-			// the fsize + 1 byte will be 0 which is NULL '\0'
-			// note, we clear memory and add the NULL at the same time
-			memset(buffer, 0, sizeof(char)*fsize + 1);
-
+			memset(buffer, '\0', sizeof(char)*fsize + 1);
 			fread(buffer, sizeof(char), fsize, f);
-
-			/* Make sure the buffer is NUL-terminated, just in case */
-			buffer[fsize] = '\0';
 
 			char *result = (char *)b64_decode((const unsigned char *)buffer, strlen((char *)buffer));
 			free(buffer);
@@ -216,8 +209,49 @@ LUALIB_API int luaopen_dynamicconfig(lua_State * L) {
 #else
 	luaL_register(L, "dynamicconfig", dynamicconfig);
 #endif
-	
 	// initial base64 default alphabet
 	b64_setup("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 	return 1;
 }
+
+LUALIB_API int luaopen_loadfile_xor(lua_State * L, const char *filename, const char *key) {
+	int status;
+
+	FILE *f;
+	if (filename == NULL) luaL_error(L, "loadfile_xor filename is null");
+
+	f = fopen(filename, "rb");
+	if (f == NULL)
+	{
+		luaL_error(L, "cannot open:%s", filename);
+	}else
+	{
+		fseek(f, 0, SEEK_END);
+		long fsize = ftell(f);
+		fseek(f, 0, SEEK_SET);
+
+		char *buffer = (char*)malloc(sizeof(char)*fsize);
+		if (!buffer)
+		{
+			luaL_error(L, "fail to malloc len of char:%d", fsize);
+		}
+		else
+		{
+			memset(buffer, 0, sizeof(char)*fsize);
+			fread(buffer, sizeof(char), fsize, f);
+
+			char *result = xor_decrypt(buffer, sizeof(char)*fsize, key, strlen(key));
+			free(buffer);
+			buffer = result;
+
+			status = luaL_loadbuffer(L, buffer, strlen(buffer), filename);
+
+			free(buffer);
+		}
+
+		fclose(f);
+	}
+
+	return status;
+}
+
