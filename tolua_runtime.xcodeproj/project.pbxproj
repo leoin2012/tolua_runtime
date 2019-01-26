@@ -1,0 +1,72 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		FAA0A31E21F228D100E82164 /* tolua_runtime */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tolua_runtime; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		FAA0A31721F227F800E82164 = {
+			isa = PBXGroup;
+			children = (
+				FAA0A31E21F228D100E82164 /* tolua_runtime */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		FAA0A31821F227F800E82164 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+			};
+			buildConfigurationList = FAA0A31B21F227F800E82164 /* Build configuration list for PBXProject "tolua_runtime" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FAA0A31721F227F800E82164;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		FAA0A31C21F227F800E82164 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		FAA0A31D21F227F800E82164 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAA0A31B21F227F800E82164 /* Build configuration list for PBXProject "tolua_runtime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAA0A31C21F227F800E82164 /* Debug */,
+				FAA0A31D21F227F800E82164 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAA0A31821F227F800E82164 /* Project object */;
+}

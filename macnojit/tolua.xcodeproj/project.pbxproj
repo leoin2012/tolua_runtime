@@ -62,6 +62,9 @@
 		84F8B8B31C45678E00AE9B8F /* tolua.c in Sources */ = {isa = PBXBuildFile; fileRef = 84F8B8B21C45678E00AE9B8F /* tolua.c */; };
 		84F8B8B51C45679700AE9B8F /* struct.c in Sources */ = {isa = PBXBuildFile; fileRef = 84F8B8B41C45679700AE9B8F /* struct.c */; };
 		84F8B8B71C45679C00AE9B8F /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 84F8B8B61C45679C00AE9B8F /* lpeg.c */; };
+		FAA0A32921F5C72000E82164 /* xxtea.c in Sources */ = {isa = PBXBuildFile; fileRef = FAA0A32521F5BD9F00E82164 /* xxtea.c */; };
+		FAA0A32A21F5C72C00E82164 /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = FAA0A32721F5BD9F00E82164 /* b64.c */; };
+		FAA0A32B21F5C73000E82164 /* lua_dynamicconfig.c in Sources */ = {isa = PBXBuildFile; fileRef = FAA0A32621F5BD9F00E82164 /* lua_dynamicconfig.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +169,12 @@
 		84F8B8B21C45678E00AE9B8F /* tolua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tolua.c; path = ../../tolua.c; sourceTree = "<group>"; };
 		84F8B8B41C45679700AE9B8F /* struct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = struct.c; path = ../../struct.c; sourceTree = "<group>"; };
 		84F8B8B61C45679C00AE9B8F /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpeg.c; path = ../../lpeg.c; sourceTree = "<group>"; };
+		FAA0A31F21F5BAFD00E82164 /* tolua-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "tolua-Prefix.pch"; path = "tolua/tolua-Prefix.pch"; sourceTree = "<group>"; };
+		FAA0A32421F5BD9F00E82164 /* b64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = b64.h; sourceTree = "<group>"; };
+		FAA0A32521F5BD9F00E82164 /* xxtea.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xxtea.c; sourceTree = "<group>"; };
+		FAA0A32621F5BD9F00E82164 /* lua_dynamicconfig.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lua_dynamicconfig.c; sourceTree = "<group>"; };
+		FAA0A32721F5BD9F00E82164 /* b64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = b64.c; sourceTree = "<group>"; };
+		FAA0A32821F5BD9F00E82164 /* xxtea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +191,7 @@
 		0F4B04C71800959F002EA938 = {
 			isa = PBXGroup;
 			children = (
+				FAA0A31F21F5BAFD00E82164 /* tolua-Prefix.pch */,
 				0F4B04D51800959F002EA938 /* tolua */,
 				0F4B04D11800959F002EA938 /* Products */,
 			);
@@ -199,6 +209,7 @@
 		0F4B04D51800959F002EA938 /* tolua */ = {
 			isa = PBXGroup;
 			children = (
+				FAA0A32321F5BD9F00E82164 /* dynamicconfig */,
 				842A59A21C85B76100EA2815 /* cjson */,
 				84EF23541C4CCD3F0093A49A /* lua */,
 				84F8B8B81C4567C100AE9B8F /* luasocket */,
@@ -337,6 +348,19 @@
 			path = ../../luasocket;
 			sourceTree = "<group>";
 		};
+		FAA0A32321F5BD9F00E82164 /* dynamicconfig */ = {
+			isa = PBXGroup;
+			children = (
+				FAA0A32421F5BD9F00E82164 /* b64.h */,
+				FAA0A32521F5BD9F00E82164 /* xxtea.c */,
+				FAA0A32621F5BD9F00E82164 /* lua_dynamicconfig.c */,
+				FAA0A32721F5BD9F00E82164 /* b64.c */,
+				FAA0A32821F5BD9F00E82164 /* xxtea.h */,
+			);
+			name = dynamicconfig;
+			path = ../../dynamicconfig;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -398,6 +422,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA0A32B21F5C73000E82164 /* lua_dynamicconfig.c in Sources */,
+				FAA0A32A21F5C72C00E82164 /* b64.c in Sources */,
+				FAA0A32921F5C72000E82164 /* xxtea.c in Sources */,
 				84EF23A81C4CCD3F0093A49A /* lundump.c in Sources */,
 				84F8B8B51C45679700AE9B8F /* struct.c in Sources */,
 				842A59A91C85B76100EA2815 /* fpconv.c in Sources */,
@@ -541,7 +568,7 @@
 		0F4B04DF1800959F002EA938 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tolua/tolua-Prefix.pch";
@@ -565,7 +592,7 @@
 		0F4B04E01800959F002EA938 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tolua/tolua-Prefix.pch";
